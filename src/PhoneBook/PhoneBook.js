@@ -19,10 +19,8 @@ class PhoneBook extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // console.log('prevProps:', prevProps);
-    console.log('prevState:', prevState);
-    console.log('this.state.contacts', this.state.contacts);
-
-    // if (prevState.contacts !== this.state.contacts) - так не работает локал сторадж. тк первый раз получается что prevState=this.state.contacts и оно не сохраняет
+    // console.log('prevState:', prevState);
+    // console.log('this.state.contacts', this.state.contacts);
 
     if (this.state.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
@@ -31,9 +29,11 @@ class PhoneBook extends Component {
 
   componentDidMount() {
     const localStorageContacts = JSON.parse(localStorage.getItem('contacts'));
-    this.setState({
-      contacts: localStorageContacts,
-    });
+    if (localStorageContacts) {
+      this.setState({
+        contacts: localStorageContacts,
+      });
+    }
   }
 
   handleState = e => {
